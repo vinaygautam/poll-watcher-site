@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poll Watcher</title>
+<style>
+:root{--bg:#07111f;--panel:#0e1b2c;--text:#f5f8fc;--muted:#9aacbf;--blue:#4da3ff;--purple:#7c5cff;--green:#34d399;--red:#fb7185;--border:rgba(255,255,255,.09)}
+*{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 15% 15%,rgba(77,163,255,.16),transparent 35%),radial-gradient(circle at 85% 10%,rgba(124,92,255,.14),transparent 30%),var(--bg)}
+.wrap{width:min(1100px,calc(100% - 28px));margin:auto;padding:24px 0 54px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:4px 0 32px}.brand{display:flex;align-items:center;gap:12px;font-weight:800}.logo{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--purple))}
+.badge{border:1px solid var(--border);background:rgba(255,255,255,.04);padding:8px 12px;border-radius:999px;color:#bdcad8;font-size:13px}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:26px}.card{border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border-radius:28px;box-shadow:0 28px 70px rgba(0,0,0,.3)}
+.hero{padding:52px}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8cc6ff;font-weight:800}.hero h1{font-size:clamp(42px,6vw,72px);line-height:.98;letter-spacing:-.055em;margin:15px 0 22px}.hero p{font-size:18px;line-height:1.7;color:var(--muted);max-width:640px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}.chip{border:1px solid var(--border);padding:10px 13px;border-radius:12px;background:rgba(255,255,255,.035);color:#c7d3e0;font-size:13px}
+.controls{padding:30px;display:flex;flex-direction:column;justify-content:space-between;min-height:470px}.status{display:flex;gap:12px;align-items:center;padding:18px;border-radius:18px;background:#102036;border:1px solid var(--border)}
+.dot{width:12px;height:12px;border-radius:50%;background:#718096;box-shadow:0 0 0 5px rgba(113,128,150,.12)}.dot.running{background:var(--green);box-shadow:0 0 0 5px rgba(52,211,153,.12),0 0 24px rgba(52,211,153,.4)}
+.status strong{display:block;font-size:14px}.status span{display:block;color:var(--muted);font-size:12px;margin-top:2px}.actions{display:grid;gap:12px;margin:28px 0}
+.btn,button{min-height:54px;border-radius:16px;border:none;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;font:800 15px inherit;cursor:pointer;text-decoration:none;transition:.18s}.btn:hover,button:hover{transform:translateY(-1px)}
+.primary{color:white;background:linear-gradient(135deg,var(--blue),var(--purple));box-shadow:0 15px 32px rgba(77,163,255,.2)}.secondary{color:var(--text);background:rgba(255,255,255,.055);border:1px solid var(--border)}.danger{color:#ffdbe1;background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.2)}
+.note{font-size:12px;line-height:1.55;color:var(--muted);text-align:center}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:26px}.step{border:1px solid var(--border);background:rgba(255,255,255,.035);border-radius:20px;padding:22px}.n{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:rgba(77,163,255,.12);color:#9bceff;font-weight:800}.step h3{font-size:16px;margin:15px 0 8px}.step p{font-size:14px;line-height:1.55;color:var(--muted);margin:0}
+footer{display:flex;justify-content:space-between;color:#71839a;font-size:12px;padding-top:28px}.toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,20px);opacity:0;background:#13243b;border:1px solid var(--border);padding:13px 17px;border-radius:14px;transition:.2s;pointer-events:none;max-width:90vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.hero{padding:34px}.steps{grid-template-columns:1fr}.controls{min-height:auto}} @media(max-width:520px){.badge{display:none}.hero{padding:26px 22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><div class="brand"><div class="logo">P</div><span>Poll Watcher</span></div><div class="badge">Windows desktop companion</div></nav>
+<section class="grid">
+<div class="card hero">
+<div class="eyebrow">Desktop automation companion</div>
+<h1>Start your watcher in one click.</h1>
+<p>Install the desktop companion once. After that, use this dashboard whenever you want to launch or stop the local watcher on your Windows laptop.</p>
+<div class="chips"><div class="chip">⚡ Fast launch</div><div class="chip">🔊 Voice alert</div><div class="chip">🖥️ Local Windows app</div><div class="chip">🔒 Runs on your device</div></div>
+</div>
+<div class="card controls">
+<div>
+<div class="status"><div id="dot" class="dot"></div><div><strong id="statusTitle">Desktop app not checked</strong><span id="statusText">Install once, then launch from here.</span></div></div>
+<div class="actions">
+<a class="btn secondary" id="installBtn" href="PollWatcherSetup.exe" download>↓ Install Poll Watcher</a>
+<button class="primary" id="startBtn">▶ Start Watcher</button>
+<button class="danger" id="stopBtn">■ Stop Watcher</button>
+</div>
+</div>
+<div class="note">The first launch may show a browser prompt asking permission to open <strong>Poll Watcher</strong>. Choose “Open” to continue.</div>
+</div>
+</section>
+<section class="steps">
+<div class="step"><div class="n">1</div><h3>Install once</h3><p>Download and install the Windows companion. The installer should register the <code>pollwatcher://</code> protocol.</p></div>
+<div class="step"><div class="n">2</div><h3>Open this dashboard</h3><p>Return to this website whenever you want to control the locally installed watcher.</p></div>
+<div class="step"><div class="n">3</div><h3>Press Start</h3><p>The browser asks Windows to open the installed app using <code>pollwatcher://start</code>.</p></div>
+</section>
+<footer><span>Poll Watcher</span><span>Local companion required · Windows</span></footer>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+const toast=document.getElementById("toast"),dot=document.getElementById("dot"),title=document.getElementById("statusTitle"),text=document.getElementById("statusText");
+function showToast(m){toast.textContent=m;toast.classList.add("show");clearTimeout(window.t);window.t=setTimeout(()=>toast.classList.remove("show"),3000)}
+document.getElementById("installBtn").onclick=()=>showToast("Downloading the Windows installer…");
+document.getElementById("startBtn").onclick=()=>{dot.classList.add("running");title.textContent="Launch requested";text.textContent="Windows should open the installed watcher.";showToast("Opening Poll Watcher… approve the browser prompt if shown.");location.href="pollwatcher://start"};
+document.getElementById("stopBtn").onclick=()=>{dot.classList.remove("running");title.textContent="Stop requested";text.textContent="The local watcher was asked to stop.";showToast("Sending stop command…");location.href="pollwatcher://stop"};
+</script>
+</body>
+</html>
